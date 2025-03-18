@@ -30,12 +30,20 @@ function tipoPokemon(tipos){ //esta funcion crear un div con su correspondiente 
     }  
 }
 
+//funcionamiento
 fetch("https://pokeapi.co/api/v2/type/").then((response) => response.json()).then(data => tipoPokemon(data))
 
-//funcionamiento
-for(let i = 1; i <= 1302; i++){
-    let urlpokemon = "https://pokeapi.co/api/v2/pokemon/"
+async function obtenerPokemones() {
+    const urlBase = "https://pokeapi.co/api/v2/pokemon/";
+    const promesas = [];
 
-    fetch(urlpokemon+i).then((response) => response.json()).then(data => tarjetasPokemon(data))
+    for (let i = 1; i <= 151; i++) {
+        promesas.push(fetch(urlBase + i).then(response => response.json()));
+    }
+
+    const pokemones = await Promise.all(promesas);
+    pokemones.forEach(pokemon => tarjetasPokemon(pokemon));
 }
+
+obtenerPokemones();
 
