@@ -4,16 +4,29 @@ const contenedorTipos = document.getElementById('navegador')
 
 //funciones
 function tarjetasPokemon(pokemon){ //esta funcion crear un div con su correspondiente clase, llena los datos de los pokemon y le da color, luego actualiza el DOM
+    let cantidadTipos = pokemon.types.length
     const tarjeta = document.createElement("div")
     tarjeta.classList.add("container1","pokemons-tarjeta")
+
+    //almacenamos la cantidad de tipos del pokemon
+    let tiposHTML = "";
+    for (let i = 0; i < cantidadTipos; i++) {
+        tiposHTML += `<p class="navegador-parrafo color-${pokemon.types[i].type.name}">${pokemon.types[i].type.name}</p>`;
+    }
+
+    //luego creamos toda la tarjeta e incluimos los tipos de pokemon a la tarjeta
     tarjeta.innerHTML = `
                     <div class="tarjeta-imagen">
                         <img src="${pokemon.sprites.other['official-artwork'].front_default}" alt="${pokemon.name}">
                     </div>
-                    <div class="tarjeta-cabecera">
+                    <div class="container1 tarjeta-cabecera">
                         <h4>${pokemon.forms[0].name}</h4>
+                        <div class="container2">${tiposHTML}</div>
+                        
                     </div>
     `;
+
+    //insertamos la tarjeta a el contenedor
     contenedor.appendChild(tarjeta);
 }
 
